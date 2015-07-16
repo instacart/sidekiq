@@ -284,6 +284,8 @@ module Sidekiq
                    end
                  when "ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper"
                    @item['wrapped'] || args[0]
+                 when "BaseJob::BaseJobWrapper"
+                   @item['wrapped'] || args[0]['job_class']
                  else
                    klass
                  end
@@ -298,6 +300,8 @@ module Sidekiq
                   end
                 when "ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper"
                   @item['wrapped'] ? args[0]["arguments"] : []
+                when "BaseJob::BaseJobWrapper"
+                  args[0]["arguments"]
                 else
                   args
                 end
