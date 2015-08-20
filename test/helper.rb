@@ -17,6 +17,7 @@ end
 require 'minitest/autorun'
 require 'minitest/pride'
 
+require 'celluloid/current'
 require 'celluloid/test'
 Celluloid.boot
 require 'sidekiq'

@@ -64,7 +64,7 @@ module Sidekiq
 
       logger.info "Running in #{RUBY_DESCRIPTION}"
       logger.info Sidekiq::LICENSE
-      logger.info "Upgrade to Sidekiq Pro for more features and support: http://sidekiq.org/pro" unless defined?(::Sidekiq::Pro)
+      logger.info "Upgrade to Sidekiq Pro for more features and support: http://sidekiq.org" unless defined?(::Sidekiq::Pro)
 
       fire_event(:startup)
 
@@ -161,7 +161,7 @@ module Sidekiq
       # Celluloid can't be loaded until after we've daemonized
       # because it spins up threads and creates locks which get
       # into a very bad state if forked.
-      require 'celluloid/autostart'
+      require 'celluloid/current'
       Celluloid.logger = (options[:verbose] ? Sidekiq.logger : nil)
 
       require 'sidekiq/manager'

@@ -1,9 +1,18 @@
+HEAD
+-----------
+
+- Upgrade to Celluloid 0.17. [#2420]
+- Activate sessions in Sinatra for CSRF protection.  See issue #2460
+  if you see a Rails error with `ActionDispatch::Request::Session`
+  on upgrade.  This is a Rails incompatibility with Rack and not a
+  Sidekiq bug. The issue contains a moneypatch workaround. [#2460]
+
 3.4.2
 -----------
 
 - Don't allow `Sidekiq::Worker` in ActiveJob::Base classes. [#2424]
 - Safer display of job data in Web UI [#2405]
-- Fix CSRF vulenerability in Web UI, thanks to Egor Homakov for
+- Fix CSRF vulnerability in Web UI, thanks to Egor Homakov for
   reporting. [#2422] If you are running the Web UI as a standalone Rack app,
   ensure you have a [session middleware
 configured](https://github.com/mperham/sidekiq/wiki/Monitoring#standalone):
