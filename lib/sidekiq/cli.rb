@@ -64,9 +64,13 @@ module Sidekiq
 
       logger.info "Running in #{RUBY_DESCRIPTION}"
       logger.info Sidekiq::LICENSE
-      logger.info "Upgrade to Sidekiq Pro for more features and support: http://sidekiq.org/pro" unless defined?(::Sidekiq::Pro)
+      logger.info "Upgrade to Sidekiq Pro for more features and support: http://sidekiq.org" unless defined?(::Sidekiq::Pro)
 
       fire_event(:startup)
+
+      logger.debug {
+        "Middleware: #{Sidekiq.server_middleware.map(&:klass).join(', ')}"
+      }
 
       Sidekiq.redis do |conn|
         # touch the connection pool so it is created before we
@@ -98,18 +102,20 @@ module Sidekiq
     end
 
     def self.banner
-%q{         s
-          ss
-     sss  sss         ss
-     s  sss s   ssss sss   ____  _     _      _    _
-     s     sssss ssss     / ___|(_) __| | ___| | _(_) __ _
-    s         sss         \___ \| |/ _` |/ _ \ |/ / |/ _` |
-    s sssss  s             ___) | | (_| |  __/   <| | (_| |
-    ss    s  s            |____/|_|\__,_|\___|_|\_\_|\__, |
-    s     s s                                           |_|
-          s s
-         sss
-         sss }
+%q{
+         m,
+         `$b
+    .ss,  $$:         .,d$
+    `$$P,d$P'    .,md$P"'
+     ,$$$$$bmmd$$$P^'
+   .d$$$$$$$$$$P'
+   $$^' `"^$$$'       ____  _     _      _    _
+   $:     ,$$:       / ___|(_) __| | ___| | _(_) __ _
+   `b     :$$        \___ \| |/ _` |/ _ \ |/ / |/ _` |
+          $$:         ___) | | (_| |  __/   <| | (_| |
+          $$         |____/|_|\__,_|\___|_|\_\_|\__, |
+        .d$$                                       |_|
+}
     end
 
     def handle_signal(sig)
@@ -161,7 +167,7 @@ module Sidekiq
       # Celluloid can't be loaded until after we've daemonized
       # because it spins up threads and creates locks which get
       # into a very bad state if forked.
-      require 'celluloid/autostart'
+      require 'celluloid/current'
       Celluloid.logger = (options[:verbose] ? Sidekiq.logger : nil)
 
       require 'sidekiq/manager'

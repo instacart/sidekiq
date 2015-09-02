@@ -44,7 +44,7 @@ Installation
 Getting Started
 -----------------
 
-See the [sidekiq home page](http://sidekiq.org) for the simple 3-step process.
+See the [Getting Started wiki page](https://github.com/mperham/sidekiq/wiki/Getting-Started) and follow the simple setup process.
 You can watch [Railscast #366](http://railscasts.com/episodes/366-sidekiq) to see Sidekiq in action.  If you do everything right, you should see this:
 
 ![Web UI](https://github.com/mperham/sidekiq/raw/master/examples/web-ui.png)
@@ -53,10 +53,10 @@ You can watch [Railscast #366](http://railscasts.com/episodes/366-sidekiq) to se
 Want to Upgrade?
 -------------------
 
-I also sell Sidekiq Pro, an extension to Sidekiq which provides more
-features, a commercial-friendly license and allows you to support high
+I also sell Sidekiq Pro and Sidekiq Enterprise, extensions to Sidekiq which provide more
+features, a commercial-friendly license and allow you to support high
 quality open source development all at the same time.  Please see the
-[Sidekiq Pro](http://sidekiq.org/pro) homepage for more detail.
+[Sidekiq](http://sidekiq.org/) homepage for more detail.
 
 
 More Information

@@ -119,16 +119,17 @@ module Sidekiq
 
     class << self
 
+      # deprecated
       def default
         @default ||= new
       end
 
       def push(item)
-        default.push(item)
+        new.push(item)
       end
 
       def push_bulk(items)
-        default.push_bulk(items)
+        new.push_bulk(items)
       end
 
       # Resque compatibility helpers.  Note all helpers
