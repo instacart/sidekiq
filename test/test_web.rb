@@ -1,6 +1,5 @@
 # encoding: utf-8
 require_relative 'helper'
-require 'sidekiq'
 require 'sidekiq/web'
 require 'rack/test'
 require 'tilt/erubis'
@@ -19,7 +18,6 @@ class TestWeb < Sidekiq::Test
     end
 
     before do
-      Sidekiq.redis = REDIS
       Sidekiq.redis {|c| c.flushdb }
     end
 
@@ -41,6 +39,15 @@ class TestWeb < Sidekiq::Test
       rackenv = {'HTTP_ACCEPT_LANGUAGE' => 'en-us'}
       get '/', {}, rackenv
       assert_match(/Dashboard/, last_response.body)
+      rackenv = {'HTTP_ACCEPT_LANGUAGE' => 'zh-cn'}
+      get '/', {}, rackenv
+      assert_match(/信息板/, last_response.body)
+      rackenv = {'HTTP_ACCEPT_LANGUAGE' => 'zh-tw'}
+      get '/', {}, rackenv
+      assert_match(/資訊主頁/, last_response.body)
+      rackenv = {'HTTP_ACCEPT_LANGUAGE' => 'nb'}
+      get '/', {}, rackenv
+      assert_match(/Oversikt/, last_response.body)
     end
 
     describe 'busy' do

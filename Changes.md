@@ -1,3 +1,42 @@
+# Sidekiq Changes
+
+3.5.4
+-----------
+
+- Ensure exception message is a string [#2707]
+- Revert racy Process.kill usage in sidekiqctl
+
+3.5.3
+-----------
+
+- Adjust shutdown event to run in parallel with the rest of system shutdown. [#2635]
+
+3.5.2
+-----------
+
+- **Sidekiq 3 is now in maintenance mode**, only major bugs will be fixed.
+- The exception triggering a retry is now passed into `sidekiq_retry_in`,
+  allowing you to retry more frequently for certain types of errors.
+  [#2619, kreynolds]
+```ruby
+  sidekiq_retry_in do |count, ex|
+    case ex
+    when RuntimeError
+      5 * count
+    else
+      10 * count
+    end
+  end
+```
+
+3.5.1
+-----------
+
+- **FIX MEMORY LEAK** Under rare conditions, threads may leak [#2598, gazay]
+- Add Ukranian locale [#2561, elrakita]
+- Disconnect and retry Redis operations if we see a READONLY error [#2550]
+- Add server middleware testing harness; see [wiki](https://github.com/mperham/sidekiq/wiki/Testing#testing-server-middleware) [#2534, ryansch]
+
 3.5.0
 -----------
 
@@ -401,7 +440,7 @@ middleware, see 3.0-Upgrade.md.**
 [Testing](https://github.com/mperham/sidekiq/wiki/Testing) for detail. [#1193]
 - The Retries table has a new column for the error message.
 - The Web UI topbar now contains the status and live poll button.
-- Orphaned worker records are now auto-vacuumed when you vist the
+- Orphaned worker records are now auto-vacuumed when you visit the
   Workers page in the Web UI.
 - Sidekiq.default\_worker\_options allows you to configure default
   options for all Sidekiq worker types.
