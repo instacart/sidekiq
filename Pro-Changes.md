@@ -3,6 +3,23 @@ Sidekiq Pro Changelog
 
 Please see [http://sidekiq.org/](http://sidekiq.org/) for more details and how to buy.
 
+2.1.1
+-----------
+
+- Make ShardSet lazier so Redis can first be initialized at startup. [#2603]
+
+
+2.1.0
+-----------
+
+- Explicit support for sharding batches.  You list your Redis shards and
+  Sidekiq Pro will randomly spread batches across the shards.  The BID
+  will indicate which shard contains the batch data.  Jobs within a
+  batch may be spread across all shards too. [#2548, jonhyman]
+- Officially deprecate Sidekiq::Notifications code.  Notifications have
+  been undocumented for months now. [#2575]
+
+
 2.0.8
 -----------
 
